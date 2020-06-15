@@ -4,10 +4,11 @@ from copy import deepcopy
 
 
 class OpenAiES:
-    def __init__(self, model, learning_rate, noise_std):
+    def __init__(self, model, learning_rate, noise_std, norm_rewards=True):
         self.model = model
         self.lr = learning_rate
         self.noise_std = noise_std
+        self.norm_rewards = norm_rewards
 
         self._population = None
 
@@ -32,7 +33,8 @@ class OpenAiES:
             raise ValueError("populations is none, generate & eval it first")
 
         # z-normalization (?) - works better, but slower
-        rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-5)
+        if self.norm_rewards:
+            rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-5)
 
         for i, layer in enumerate(self.model.W):
             w_updates = np.zeros_like(layer)
