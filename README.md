@@ -5,13 +5,18 @@ Implementation is strictly for educational purposes, not distributed and not ver
 
 ## Experiments
 
-![plot](plots/run_single_v0.png)
+Easily solves CartPole-V0
 
-The std is based on populations, so it's not surprising that it's so large.
-
-![also_plot](plots/run_v0.png)
+![plot](plots/test_single_v4.png)
 
 
-# References
+## TODO
+
+- weight decay
+- rank transformation 
+- mirrored sampling
+- parallelization
+
+## References
 
 [Evolution Strategies as a Scalable Alternative to Reinforcement Learning](https://arxiv.org/abs/1703.03864) (Tim Salimans, Jonathan Ho, Xi Chen, Ilya Sutskever)

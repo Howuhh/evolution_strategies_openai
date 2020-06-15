@@ -35,11 +35,12 @@ class ThreeLayerNetwork:
 
         output = ReLU(ReLU(X_bias @ self.W[0]) @ self.W[1]) @ self.W[2]
         
-        return SoftMax(output)
+        return output
 
     def predict(self, X):
-        prob = self.forward(X)[0]
-
+        raw_output = self.forward(X)
+        prob = SoftMax(raw_output)[0]
+        
         return np.random.choice(self.out_features, p=prob)
 
 
@@ -47,7 +48,7 @@ if __name__ == "__main__":
     model = ThreeLayerNetwork(4, 4)
     data = np.random.randn(100, 4)
 
-    prediction = model.forward(data)
+    prediction = model.predict(data)
 
     print(prediction.shape)
     print(np.max(prediction))

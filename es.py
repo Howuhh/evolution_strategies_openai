@@ -32,7 +32,7 @@ class OpenAiES:
             raise ValueError("populations is none, generate & eval it first")
 
         # z-normalization (?) - works better, but slower
-        rewards = (rewards - rewards.mean()) / rewards.std()
+        rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-5)
 
         for i, layer in enumerate(self.model.W):
             w_updates = np.zeros_like(layer)
