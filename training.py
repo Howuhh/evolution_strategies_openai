@@ -7,11 +7,11 @@ from evaluation import eval_policy
 from es import OpenAiES
 from tqdm import tqdm
 
+# es
 LEARNING_RATE = 0.01
 NOISE_STD = 0.05
 N_SESSIONS = 64
-N_POPULATIONS = 50
-# 256 64 0.05 0.01
+N_POPULATIONS = 256
 np.random.seed(42)
 
 def train_loop(policy, env, n_sessions, npop):
@@ -40,48 +40,57 @@ def main():
     n_actions = env.action_space.n
     n_states = env.observation_space.shape[0]
 
-    # policy = ThreeLayerNetwork(
-    #     in_features=n_states, 
-    #     out_features=n_actions, 
-    #     hidden_sizes=(32, 32)
-    # )
-    # mean_rewards, std_rewards = train_loop(policy, env, N_SESSIONS, N_POPULATIONS)
+    policy = ThreeLayerNetwork(
+        in_features=n_states, 
+        out_features=n_actions, 
+        hidden_sizes=(32, 32)
+    )
+    mean_rewards, std_rewards = train_loop(policy, env, N_SESSIONS, N_POPULATIONS)
 
-    # print(mean_rewards)
-
-
-    run_mean_rewards, run_std_rewards = [], []
-    for run in tqdm(range(3)):
-        policy = ThreeLayerNetwork(
-            in_features=n_states, 
-            out_features=n_actions, 
-            hidden_sizes=(32, 32)
-        )
-        mean_rewards, std_rewards = train_loop(policy, env, N_SESSIONS, N_POPULATIONS)
-
-        run_mean_rewards.append(mean_rewards)
-        run_std_rewards.append(std_rewards)
-
-    run_mean_rewards = np.array(run_mean_rewards).mean(axis=0)
-    run_std_rewards = np.array(run_std_rewards).mean(axis=0)
-
-    plt.plot(np.arange(N_SESSIONS), run_mean_rewards)
+    stats = (
+    f"n_sessions: {N_SESSIONS}\nn_populations: {N_POPULATIONS}\nlr: {LEARNING_RATE}\nnoise_std: {NOISE_STD} "
+    )
+    
+    fig, ax = plt.subplots()
+    plt.title("CartPole-v0: Single run")
+    plt.plot(np.arange(N_SESSIONS), mean_rewards)
     plt.fill_between(np.arange(N_SESSIONS),
-                    run_mean_rewards + run_mean_rewards, 
-                    run_mean_rewards - run_mean_rewards, alpha=0.5)
-    plt.show()
+                    mean_rewards + std_rewards, 
+                    mean_rewards - std_rewards, alpha=0.5)
+    plt.xlabel("weights updates")
+    plt.ylabel("reward")
+    plt.text(0.05, 0.8, stats, transform=ax.transAxes)
+    plt.savefig('plots/run_single_v0.png')
 
+    # run_mean_rewards, run_std_rewards = [], []
+    # for run in tqdm(range(5)):
+    #     policy = ThreeLayerNetwork(
+    #         in_features=n_states, 
+    #         out_features=n_actions, 
+    #         hidden_sizes=(32, 32)
+    #     )
+    #     mean_rewards, std_rewards = train_loop(policy, env, N_SESSIONS, N_POPULATIONS)
 
-    # # show stats
-    # r_mean = np.array(run_mean_rewards)
-    # r_std = np.array(run_std_rewards)
+    #     run_mean_rewards.append(mean_rewards)
+    #     run_std_rewards.append(std_rewards)
 
-    # plt.plot(np.arange(10), r_mean)
-    # plt.fill_between(np.arange(10), r_mean + r_std, r_mean - r_std, facecolor='blue', alpha=0.5)
-    # plt.title("CartPole-v0")
-    # plt.xlabel("session")
+    # run_mean_rewards = np.array(run_mean_rewards).mean(axis=0)
+    # run_std_rewards = np.array(run_std_rewards).mean(axis=0)
+
+    # stats = (
+    #     f"n_sessions: {N_SESSIONS}\nn_populations: {N_POPULATIONS}\nlr: {LEARNING_RATE}\nnoise_std: {NOISE_STD} "
+    #     )
+    
+    # fig, ax = plt.subplots()
+    # plt.title("CartPole-v0: Averaged rewards")
+    # plt.plot(np.arange(N_SESSIONS), run_mean_rewards)
+    # plt.fill_between(np.arange(N_SESSIONS),
+    #                 run_mean_rewards + run_mean_rewards, 
+    #                 run_mean_rewards - run_mean_rewards, alpha=0.5)
+    # plt.xlabel("weights updates")
     # plt.ylabel("reward")
-    # plt.show()
+    # plt.text(0.05, 0.8, stats, transform=ax.transAxes)
+    # plt.savefig('plots/run_v0.png')
 
 
 if __name__ == "__main__":
