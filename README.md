@@ -7,7 +7,7 @@ Implementation is strictly for educational purposes, not distributed and not ver
 
 Easily solves CartPole-V0
 
-![plot](plots/test_single_v4.png)
+![plot](plots/test_single_v5.png)
 
 
 ## TODO
