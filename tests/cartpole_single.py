@@ -7,7 +7,7 @@ from training import run_experiment
 
 def test():
     test_config = {
-        "experiment_name": "test_CartPole_v1",
+        "experiment_name": "test_CartPole_v2",
         "plot_path": "../plots/",
         "model_path": "../models/",
         "env": "CartPole-v0",

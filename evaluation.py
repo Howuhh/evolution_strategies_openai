@@ -5,7 +5,6 @@ def eval_policy(policy, env, n_steps=200):
     total_reward = 0
 
     obs = env.reset()
-
     for i in range(n_steps):
         action = policy.predict(np.array(obs).reshape(1, -1))
 

@@ -6,14 +6,19 @@ Implementation is strictly for educational purposes, not distributed and not ver
 ## Experiments
 
 ### CartPole
-Easily solves CartPole-V0
 
-![plot](plots/test_single_v5.png)
+<p float="left">
+  <img src="plots/test_CartPole_v1.png" width="600" />
+  <img src="plots/gifs/best_pole.gif" width="600" /> 
+</p>
 
 ### LunarLander
-First run on LunarLander 
 
-![plot2](plots/test_LunarLander_v1.png)
+<p float="left">
+  <img src="plots/test_LunarLander_v3.png" width="600" />
+  <img src="plots/gifs/best_lunar.gif" width="600" /> 
+</p>
+
 
 ## TODO
 
@@ -28,11 +33,11 @@ First run on LunarLander
 
 - [x] CartPole   
 - [ ] CarRacing      
-- [ ] LunarLander    
+- [x] LunarLander    
 - [ ] MountainCar (hard)     
 - [ ] Taxi & FrozenLake  
 
-# Ideas
+## Ideas
 
 - for parallel (exampler interface): es.eval_population(npop) -> updates -> es.update_population(updates)
 <!-- функция берет модель, рандомно меняет веса, прогоняет, получает ревард и возвращает апдйет весов сразу -> легче параллелить,

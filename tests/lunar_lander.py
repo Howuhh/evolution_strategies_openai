@@ -8,15 +8,15 @@ from training import run_experiment
 
 def test():
     test_config = {
-        "experiment_name": "test_LunarLander_v2",
+        "experiment_name": "test_LunarLander_v4",
         "plot_path": "../plots/",
         "model_path": "../models/",
         "env": "LunarLander-v2",
         "n_sessions": 512,
         "env_steps": 500, 
         "population_size": 256,
-        "learning_rate": 0.05, # 0.01
-        "noise_std": 0.1, # 0.075
+        "learning_rate": 0.01,
+        "noise_std": 0.075,
         "hidden_sizes": (64, 64)
     }
     
