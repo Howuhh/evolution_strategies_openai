@@ -8,15 +8,15 @@ Implementation is strictly for educational purposes, not distributed and not ver
 ### CartPole
 
 <p float="left">
-  <img src="plots/test_CartPole_v1.png" width="600" />
-  <img src="plots/gifs/best_pole.gif" width="600" /> 
+  <img src="plots/test_CartPole_v1.png" width="360" />
+  <img src="plots/gifs/best_pole.gif" width="360" /> 
 </p>
 
 ### LunarLander
 
 <p float="left">
-  <img src="plots/test_LunarLander_v3.png" width="600" />
-  <img src="plots/gifs/best_lunar.gif" width="600" /> 
+  <img src="plots/test_LunarLander_v3.png" width="360" />
+  <img src="plots/gifs/best_lunar.gif" width="360" /> 
 </p>
 
 
