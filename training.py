@@ -32,8 +32,7 @@ def train_loop(policy, env, config):
                 best_rewards[i] = eval_policy(best_policy, env, n_steps=config["env_steps"])
 
             print(f"Session: {session}") 
-            print(np.mean(rewards))
-            print(np.std(rewards))
+            print(f"Mean reward: {round(np.mean(rewards), 4)}", f"std: {round(np.std(rewards), 3)}")
 
             log["best_mean_rewards"].append(np.mean(best_rewards))
             log["best_std_rewards"].append(np.std(best_rewards))            

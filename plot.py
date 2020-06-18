@@ -19,9 +19,9 @@ def plot_rewards(mean_rewards, std_rewards, config):
     fig, ax = plt.subplots()
     plt.figure(figsize=(12, 8))
     plt.text(0.35, 1.25, stats, transform=ax.transAxes)
-    plt.title(f"{config['env']}: Single run")
+    plt.title(f"{config['env']}: Single run") # TODO: chng name to experiment name 
     plt.plot(np.arange(best_mean.shape[0]), best_mean)
     plt.fill_between(np.arange(best_mean.shape[0]), best_mean + best_std, best_mean - best_std, alpha=0.5)
     plt.xlabel("weights updates (mod 2)")
     plt.ylabel("reward")
-    plt.savefig(f'plots/{config["experiment_name"]}.png')
+    plt.savefig(f"{config['plot_path']}{config['experiment_name']}.png")
