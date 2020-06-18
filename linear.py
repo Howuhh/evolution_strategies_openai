@@ -11,6 +11,10 @@ def SoftMax(x):
     return x_exp / x_exp.sum()
 
 
+def tanh(x):
+    return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
+    
+
 class ThreeLayerNetwork:
     def __init__(self, in_features, out_features, hidden_sizes=(32, 32)):
         self.in_features = in_features
@@ -37,20 +41,24 @@ class ThreeLayerNetwork:
         
         return output
 
-    def predict(self, X):
+    def predict(self, X, scale="softmax"):
         raw_output = self.forward(X)
-        prob = SoftMax(raw_output)[0]
         
-        return np.random.choice(self.out_features, p=prob)
+        if scale == "tanh":
+            return tanh(raw_output)[0]       
+        elif scale == "softmax":
+            prob = SoftMax(raw_output)[0]
+            # TODO: action choice more about agent than model
+            return np.random.choice(self.out_features, p=prob)
+
+        return raw_output[0]
 
 
 if __name__ == "__main__":
     model = ThreeLayerNetwork(4, 4)
-    data = np.random.randn(100, 4)
+    data = np.random.randn(1, 4)
 
-    prediction = model.predict(data)
-
-    print(prediction.shape)
-    print(np.max(prediction))
+    prediction = model.predict(data, scale="tanh")
+    
     print(prediction)
     

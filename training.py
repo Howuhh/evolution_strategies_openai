@@ -25,6 +25,7 @@ def train_loop(policy, env, config):
         rewards = np.zeros(config["population_size"])
         # TODO: parallel (?)
         for i, new_policy in enumerate(population):
+            # TODO: average rewards for each agent in 10 trials
             rewards[i] = eval_policy(new_policy, env, n_steps=config["env_steps"])
 
         es.update_population(rewards)
@@ -49,8 +50,16 @@ def train_loop(policy, env, config):
 def run_experiment(config):
     env = gym.make(config["env"])
 
-    n_actions = env.action_space.n
-    n_states = env.observation_space.shape[0]
+    # well, thats a gym problem
+    try:
+        n_actions = env.action_space.shape[0]
+    except IndexError:
+        n_actions = env.action_space.n
+    
+    try:
+        n_states = env.observation_space.shape[0]
+    except IndexError:
+        n_states = env.observation_space.n
 
     policy = ThreeLayerNetwork(
         in_features=n_states, 
@@ -64,7 +73,6 @@ def run_experiment(config):
     return policy
 
 
-# TODO: add code to record video/render of agent in env
 def render_policy(model_path, env_name):
     with open(model_path, "rb") as file:
         policy = pickle.load(file)
@@ -76,11 +84,25 @@ def render_policy(model_path, env_name):
         env = wrappers.Monitor(env, f'videos/{model_name}/' + str(uuid.uuid4()), force=True)
 
         eval_policy(policy, env, n_steps=800)
-    
         env.close()
 
 
 if __name__ == "__main__":
     # render_policy("models/test_LunarLander_v2.pkl", "LunarLander-v2")
-    render_policy("models/test_CartPole_v1.pkl", "CartPole-v0")
+    # render_policy("models/test_CartPole_v1.pkl", "CartPole-v0")
     # render_policy("models/test_LunarLander_v3.pkl", "LunarLander-v2")
+    test_config = {
+        "experiment_name": "test_LunarLanderCont_v1",
+        "plot_path": "plots/",
+        "model_path": "models/",
+        "env": "LunarLanderContinuous-v2",
+        "n_sessions": 5,
+        "env_steps": 500, 
+        "population_size": 256,
+        "learning_rate": 0.01,
+        "noise_std": 0.075,
+        "hidden_sizes": (64, 64)
+    }
+    
+    policy = run_experiment(test_config)
+
