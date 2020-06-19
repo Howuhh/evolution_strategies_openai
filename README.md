@@ -19,13 +19,21 @@ Implementation is strictly for educational purposes, not distributed and not ver
   <img src="plots/gifs/best_lunar.gif" width="360" /> 
 </p>
 
+### LunarLanderContinuous
+
+<p float="left">
+  <img src="plots/test_LunarLanderCont_v1.png" width="360" />
+  <img src="plots/gifs/best_lunar_cont.gif" width="360" /> 
+</p>
+
 
 ## TODO
+
+- parallelization (!!!)
 
 - weight decay (noise std decay???)
 - rank transformation 
 - mirrored sampling
-- parallelization
 - adam
 - batch norm
 - skip frames
@@ -34,7 +42,8 @@ Implementation is strictly for educational purposes, not distributed and not ver
 
 - [x] CartPole   
 - [ ] CarRacing      
-- [x] LunarLander    
+- [x] LunarLander   
+- [ ] LunarLanderContinuous
 
 Cannot solve, sparse rewards + random
 - [ ] MountainCar (hard)     
@@ -42,6 +51,11 @@ Cannot solve, sparse rewards + random
 
 <!-- ## Ideas
 
+skip frames - https://notanymike.github.io/Solving-CarRacing/, https://danieltakeshi.github.io/2016/11/25/frame-skipping-and-preprocessing-for-deep-q-networks-on-atari-2600-games/, https://github.com/openai/baselines/blob/master/baselines/common/atari_wrappers.py (NB!, class MaxAndSkipEnv(gym.Wrapper) and class WarpFrame(gym.ObservationWrapper)), https://alexandervandekleut.github.io/gym-wrappers/
+noise/lr annealing - https://cs231n.github.io/neural-networks-3/#anneal,  https://arxiv.org/pdf/1608.03983.pdf, https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1
+
+
+ 
 - добавить инициализацию модели с уже обученных весов и попробовать решить несколько сред сразу
 - for parallel (exampler interface): es.eval_population(npop) -> updates -> es.update_population(updates) -->
 <!-- функция берет модель, рандомно меняет веса, прогоняет, получает ревард и возвращает апдйет весов сразу -> легче параллелить,

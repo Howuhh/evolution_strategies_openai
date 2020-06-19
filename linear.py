@@ -12,7 +12,9 @@ def SoftMax(x):
 
 
 def tanh(x):
-    return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
+    # x = x - np.max(x)
+    # return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
+    return np.tanh(x)
     
 
 class ThreeLayerNetwork:

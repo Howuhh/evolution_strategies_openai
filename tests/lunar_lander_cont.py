@@ -12,7 +12,7 @@ def test():
         "plot_path": "../plots/",
         "model_path": "../models/",
         "env": "LunarLanderContinuous-v2",
-        "n_sessions": 5,
+        "n_sessions": 512,
         "env_steps": 500, 
         "population_size": 256,
         "learning_rate": 0.01,
