@@ -6,14 +6,15 @@ sys.path.append('..')
 from training import run_experiment
 
 # MountainCar-v0 defines "solving" as getting average reward of -110.0 over 100 consecutive trials.
+# TODO: wait for novelity search
 def test():
     test_config = {
-        "experiment_name": "test_MountainCarCont_v1",
+        "experiment_name": "test_MountainCarCont_v2",
         "plot_path": "../plots/",
         "model_path": "../models/",
         "env": "MountainCarContinuous-v0",
-        "n_sessions": 512,
-        "env_steps": 500, 
+        "n_sessions": 128,
+        "env_steps": 200, 
         "population_size": 256,
         "learning_rate": 0.1,
         "noise_std": 0.5,

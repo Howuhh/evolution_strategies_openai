@@ -6,6 +6,7 @@ import numpy as np
 
 from tqdm import tqdm
 from joblib import Parallel
+from copy import copy
 from collections import defaultdict
 
 from gym import wrappers
