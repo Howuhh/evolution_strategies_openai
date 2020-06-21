@@ -4,22 +4,31 @@ from copy import deepcopy
 
 
 class OpenAiES:
-    def __init__(self, model, learning_rate, noise_std, norm_rewards=True):
+    def __init__(self, model, learning_rate, noise_std, \
+                    noise_decay=1.0, lr_decay=1.0, decay_step=50, norm_rewards=True):
         self.model = model
-        self.lr = learning_rate
-        self.noise_std = noise_std
+        self._lr = learning_rate
+        self._noise_std = noise_std
+
         self.norm_rewards = norm_rewards
+        self.noise_decay = noise_decay
+        self.lr_decay = lr_decay
+        self.decay_step = decay_step
 
         self._population = None
+        self._count = 0
 
-    # TODO: step decay
-    # @property
-    # def noise_std(session):
-    #     pass
+    @property
+    def noise_std(self):
+        step_decay = np.pow(self.noise_decay, np.floor((1 + self._count) / self.decay_step))
 
-    # @property
-    # def learning_rate(session):
-    #     pass
+        return self._noise_std * step_decay
+
+    @property
+    def lr(self):
+        step_decay = np.pow(self.lr_decay, np.floor((1 + self._count) / self.decay_step))
+
+        return self._lr * step_decay
 
     def generate_population(self, npop=50):
         self._population = []
@@ -53,6 +62,8 @@ class OpenAiES:
 
             # SGD weights update
             self.model.W[i] = self.model.W[i] + (self.lr / (len(rewards) * self.noise_std)) * w_updates
+        
+        self._count = self._count + 1
 
     def get_model(self):
         return self.model
