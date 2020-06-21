@@ -35,7 +35,7 @@ Continuous env is solved much faster and better, probably at the expense of more
 
 Сan't solve it yet.   
 
-In the discrete version of env, the main problem is sparse reward, which is only given at the very end if you climb a hill. Since the agent does not have time for 200 iterations with the random weights to do so, the natural gradient turns out to be zero and the training is in place. Solution: remove the 200 iteration limit and wait for the random agent to climb the mountain himself, getting the first reward :). However, this is not quite fair.   
+In the discrete version of env, the main problem is sparse reward, which is only given at the very end if you climb a hill. Since the agent does not have time for 200 iterations with the random weights to do so, the natural gradient turns out to be zero and the training is stuck. Solution: remove the 200 iteration limit and wait for the random agent to climb the mountain himself, getting the first reward :). However, this is not quite fair.   
 
 In continuous env, the main problem is the lack of exploration. The agent quickly (faster than climbing the hill) realizes that the best way is to stand still and get 0 reward, which is much higher than when moving.
 
@@ -44,8 +44,16 @@ In continuous env, the main problem is the lack of exploration. The agent quickl
   <img src="plots/gifs/best_mountain_car_cont.gif" width="360" /> 
 </p>
 
-Possible solution: novelity search. As a novelity function it is possible to take velocity, velocity * x_coord, or x_coord at the end of episode. [Reward shaping](https://people.eecs.berkeley.edu/~pabbeel/cs287-fa09/readings/NgHaradaRussell-shaping-ICML1999.pdf) may improve convergence for DQN/CEM methods, but in this case it does not produce positive results.
+Possible solution: novelity search. As a novelity function it is possible to take velocity, velocity * x_coord, or x_coord at the end of episode. [Reward shaping](https://people.eecs.berkeley.edu/~pabbeel/cs287-fa09/readings/NgHaradaRussell-shaping-ICML1999.pdf) may improve convergence for DQN/CEM methods, but in this case it does not produce better results.
 
+### BipedalWalker
+
+Not solved yet. More iterations is needed.
+
+<p float="left">
+  <img src="plots/test_BipedalWalker_v2.png" width="360" />
+  <img src="plots/gifs/best_bipedal_walker.gif" width="360" /> 
+</p>
 
 ## Implemented
 

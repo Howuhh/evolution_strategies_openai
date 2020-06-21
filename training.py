@@ -6,7 +6,6 @@ import numpy as np
 
 from tqdm import tqdm
 from joblib import Parallel
-from copy import copy
 from collections import defaultdict
 
 from gym import wrappers
@@ -24,7 +23,7 @@ ENV_INFO = {
     "MountainCar-v0": (2, 3),
     "MountainCarContinuous-v0": (2, 1),
     "CarRacing-v0": (96*96*3, 3), # TODO: wrap env to prep pixels & discrete actions
-    "BipedalWalker-v2": (24, 4)
+    "BipedalWalker-v3": (24, 4)
 }
 
 
@@ -66,6 +65,8 @@ def train_loop(policy, env, config, verbose=True, n_jobs=1):
 
 def run_experiment(config, verbose=True, n_jobs=4):
     env = gym.make(config["env"])
+    env._env_name = env.spec._env_name
+
     n_states, n_actions = ENV_INFO[config["env"]]
 
     policy = ThreeLayerNetwork(
@@ -86,7 +87,7 @@ def render_policy(model_path, env_name):
 
     model_name = model_path.split("/")[-1].split(".")[0]
     
-    for i in range(1):
+    for i in range(5):
         env = gym.make(env_name)
         env = wrappers.Monitor(env, f'videos/{model_name}/' + str(uuid.uuid4()), force=True)
 
@@ -95,10 +96,11 @@ def render_policy(model_path, env_name):
 
 
 if __name__ == "__main__":
+    pass
     # render_policy("models/test_CartPole_v1.pkl", "CartPole-v0")
     # render_policy("models/test_LunarLander_v3.pkl", "LunarLander-v2")
     # render_policy("models/test_LunarLanderCont_v1.pkl", "LunarLanderContinuous-v2")
-    render_policy("models/test_MountainCarCont_v1.pkl", "MountainCarContinuous-v0")
+    render_policy("models/test_BipedalWalker_v2.pkl", "BipedalWalker-v3")
     
     # test_config = {
     #     "experiment_name": "test_test",

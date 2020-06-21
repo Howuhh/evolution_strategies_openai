@@ -12,6 +12,15 @@ class OpenAiES:
 
         self._population = None
 
+    # TODO: step decay
+    # @property
+    # def noise_std(session):
+    #     pass
+
+    # @property
+    # def learning_rate(session):
+    #     pass
+
     def generate_population(self, npop=50):
         self._population = []
 
@@ -21,7 +30,7 @@ class OpenAiES:
 
             for i, layer in enumerate(new_model.W):
                 noise = np.random.randn(layer.shape[0], layer.shape[1])
-                # *layer.shape
+
                 new_model.E.append(noise)
                 new_model.W[i] = new_model.W[i] + self.noise_std * noise
             self._population.append(new_model)
@@ -47,3 +56,9 @@ class OpenAiES:
 
     def get_model(self):
         return self.model
+
+
+class OpenAIES_NSR:
+    # TODO: novelity search
+    def __init__(self):
+        pass

@@ -8,7 +8,7 @@ from training import run_experiment
 # TODO: parallel & continuous
 def test():
     test_config = {
-        "experiment_name": "test_LunarLanderCont_v1",
+        "experiment_name": "test_LunarLanderCont_v2",
         "plot_path": "../plots/",
         "model_path": "../models/",
         "env": "LunarLanderContinuous-v2",
