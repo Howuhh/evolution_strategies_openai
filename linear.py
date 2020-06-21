@@ -5,15 +5,13 @@ def ReLU(x):
     return np.maximum(0, x)
 
 
-def SoftMax(x):
+def softmax(x):
     x_exp = np.exp(x - np.max(x))
 
     return x_exp / x_exp.sum()
 
 
 def tanh(x):
-    # x = x - np.max(x)
-    # return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
     return np.tanh(x)
     
 
@@ -44,12 +42,14 @@ class ThreeLayerNetwork:
         return output
 
     def predict(self, X, scale="softmax"):
-        raw_output = self.forward(X)
+        X_norm = (X - X.mean()) / (X.std() + 1e-5)
+
+        raw_output = self.forward(X_norm)
         
         if scale == "tanh":
             return tanh(raw_output)[0]       
         elif scale == "softmax":
-            prob = SoftMax(raw_output)[0]
+            prob = softmax(raw_output)[0]
             # TODO: action choice more about agent than model
             return np.random.choice(self.out_features, p=prob)
 

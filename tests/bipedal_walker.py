@@ -8,15 +8,15 @@ from training import run_experiment
 # solving the task as getting an average score of 300+ over 100 consecutive random trials.
 def test():
     test_config = {
-        "experiment_name": "test_BipedalWalker_v2",
+        "experiment_name": "test_BipedalWalker_v3",
         "plot_path": "../plots/",
         "model_path": "../models/",
         "env": "BipedalWalker-v3",
-        "n_sessions": 256,
-        "env_steps": 1600, 
+        "n_sessions": 512,
+        "env_steps": 1200, 
         "population_size": 256,
-        "learning_rate": 0.065,
-        "noise_std": 0.08,
+        "learning_rate": 0.08,
+        "noise_std": 0.1,
         "hidden_sizes": (64, 64)
     }
     
