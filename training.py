@@ -56,6 +56,7 @@ def train_loop(policy, env, config, verbose=True, n_jobs=1):
             if verbose:
                 print(f"Session: {session}") 
                 print(f"Mean reward: {round(np.mean(rewards), 4)}", f"std: {round(np.std(rewards), 3)}")
+                print(f"lr: {es.lr}, noise_std: {es.noise_std}")
 
             log["best_mean_rewards"].append(np.mean(best_rewards))
             log["best_std_rewards"].append(np.std(best_rewards))            
@@ -100,7 +101,7 @@ if __name__ == "__main__":
     # render_policy("models/test_CartPole_v1.pkl", "CartPole-v0")
     # render_policy("models/test_LunarLander_v3.pkl", "LunarLander-v2")
     # render_policy("models/test_LunarLanderCont_v1.pkl", "LunarLanderContinuous-v2")
-    render_policy("models/test_BipedalWalker_v2.pkl", "BipedalWalker-v3")
+    render_policy("models/test_BipedalWalker_v3.pkl", "BipedalWalker-v3")
     
     # test_config = {
     #     "experiment_name": "test_test",
