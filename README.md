@@ -62,13 +62,13 @@ Not solved yet. More iterations is needed.
 - [x] Parallelization with joblib.
 - [x] Training for 6 OpenAI gym envs (3 solved).
 - [x] Simple three layer net as policy example.
+- [x] [Learning rate & noise std decay.](https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1) 
 
 ![Algorithm_1](plots/algo_code.png)
 
 ## TODO
 
 - [ ] [Novelity search.](https://lilianweng.github.io/lil-log/2019/09/05/evolution-strategies.html) 
-- [ ] [Learning rate & noise std decay.](https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1)  
 - [ ] Mirrored sampling.
 - [ ] Better gradient steps: Adam.
 - [ ] Wrap CarRacing env, add images preprocessing (frame skip, grayscale, downgrade)
