@@ -22,6 +22,6 @@ def plot_rewards(mean_rewards, std_rewards, config):
     plt.title(f"{config['env']}: {config['experiment_name']}") 
     plt.plot(np.arange(best_mean.shape[0]), best_mean)
     plt.fill_between(np.arange(best_mean.shape[0]), best_mean + best_std, best_mean - best_std, alpha=0.5)
-    plt.xlabel("weights updates (mod 2)")
+    plt.xlabel(f"weights updates (mod {config.get('eval_steps', '2')})")
     plt.ylabel("reward")
     plt.savefig(f"{config['plot_path']}{config['experiment_name']}.png")

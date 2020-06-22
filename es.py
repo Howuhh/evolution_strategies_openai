@@ -22,13 +22,13 @@ class OpenAiES:
 
     @property
     def noise_std(self):
-        step_decay = np.pow(self.noise_decay, np.floor((1 + self._count) / self.decay_step))
+        step_decay = np.power(self.noise_decay, np.floor((1 + self._count) / self.decay_step))
 
         return self._noise_std * step_decay
 
     @property
     def lr(self):
-        step_decay = np.pow(self.lr_decay, np.floor((1 + self._count) / self.decay_step))
+        step_decay = np.power(self.lr_decay, np.floor((1 + self._count) / self.decay_step))
 
         return self._lr * step_decay
 

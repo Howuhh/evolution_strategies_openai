@@ -47,7 +47,7 @@ def train_loop(policy, env, config, n_jobs=1, verbose=True):
         es.update_population(rewards)
         
         # best policy stats
-        if session % 2 == 0:
+        if session % config.get("eval_steps", 2) == 0:
             best_policy = es.get_model()
 
             best_rewards = np.zeros(10)
@@ -57,7 +57,7 @@ def train_loop(policy, env, config, n_jobs=1, verbose=True):
             if verbose:
                 print(f"Session: {session}") 
                 print(f"Mean reward: {round(np.mean(rewards), 4)}", f"std: {round(np.std(rewards), 3)}")
-                print(f"lr: {es.lr}, noise_std: {es.noise_std}")
+                print(f"lr: {round(es.lr, 5)}, noise_std: {round(es.noise_std, 5)}")
 
             log["best_mean_rewards"].append(np.mean(best_rewards))
             log["best_std_rewards"].append(np.std(best_rewards))            
@@ -71,11 +71,17 @@ def run_experiment(config, n_jobs=4, verbose=True):
 
     n_states, n_actions = ENV_INFO[config["env"]]
 
-    policy = ThreeLayerNetwork(
-        in_features=n_states, 
-        out_features=n_actions, 
-        hidden_sizes=config["hidden_sizes"]
-    )
+    if config.get("init_model", None):
+        policy = ThreeLayerNetwork.from_model(config["init_model"])
+        
+        assert policy.n_states == n_states, "not correct policy input dims"
+        assert policy.n_actions == n_actions, "not correct policy output dims"
+    else:
+        policy = ThreeLayerNetwork(
+            in_features=n_states, 
+            out_features=n_actions, 
+            hidden_sizes=config["hidden_sizes"]
+        )
     log = train_loop(policy, env, config, n_jobs, verbose)
 
     plot_rewards(log["best_mean_rewards"], log["best_std_rewards"], config)
@@ -89,7 +95,7 @@ def render_policy(model_path, env_name):
 
     model_name = model_path.split("/")[-1].split(".")[0]
     
-    for i in range(5):
+    for i in range(1):
         env = gym.make(env_name)
         env = wrappers.Monitor(env, f'videos/{model_name}/' + str(uuid.uuid4()), force=True)
 
@@ -102,7 +108,7 @@ if __name__ == "__main__":
     # render_policy("models/test_CartPole_v1.pkl", "CartPole-v0")
     # render_policy("models/test_LunarLander_v3.pkl", "LunarLander-v2")
     # render_policy("models/test_LunarLanderCont_v1.pkl", "LunarLanderContinuous-v2")
-    render_policy("models/test_BipedalWalker_v3.pkl", "BipedalWalker-v3")
+    render_policy("models/test_BipedalWalker_v4.pkl", "BipedalWalker-v3")
     
     # test_config = {
     #     "experiment_name": "test_test",

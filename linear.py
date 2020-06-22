@@ -1,3 +1,5 @@
+import pickle
+
 import numpy as np 
 
 
@@ -20,9 +22,11 @@ class ThreeLayerNetwork:
         self.out_features = out_features
         self.hidden_sizes = hidden_sizes
 
-        self.W = self.init_layers()
+        self.W = self._init_layers()
 
-    def init_layers(self):
+    # TODO: init weights from model -> load_model(self, path)
+
+    def _init_layers(self):
         layer1_dim, layer2_dim = self.hidden_sizes
 
         # +1 to dims for bias trick & He weight init
@@ -31,6 +35,13 @@ class ThreeLayerNetwork:
         W3 = np.random.randn(layer2_dim + 1, self.out_features) * np.sqrt(2 / (layer2_dim + 1))
 
         return [W1, W2, W3]
+
+    @staticmethod
+    def from_model(path):
+        with open(path, "rb") as file:
+            model = pickle.load(file)
+
+        return model
 
     def forward(self, X):
         bias = np.ones((X.shape[0], 1))
