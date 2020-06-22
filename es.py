@@ -7,13 +7,15 @@ class OpenAiES:
     def __init__(self, model, learning_rate, noise_std, \
                     noise_decay=1.0, lr_decay=1.0, decay_step=50, norm_rewards=True):
         self.model = model
+        
         self._lr = learning_rate
         self._noise_std = noise_std
-
-        self.norm_rewards = norm_rewards
+        
         self.noise_decay = noise_decay
         self.lr_decay = lr_decay
         self.decay_step = decay_step
+
+        self.norm_rewards = norm_rewards
 
         self._population = None
         self._count = 0

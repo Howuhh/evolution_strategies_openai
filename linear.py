@@ -7,13 +7,10 @@ def ReLU(x):
 
 def SoftMax(x):
     x_exp = np.exp(x - np.max(x))
-
     return x_exp / x_exp.sum()
 
 
 def tanh(x):
-    # x = x - np.max(x)
-    # return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
     return np.tanh(x)
     
 
