@@ -7,7 +7,6 @@ def ReLU(x):
 
 def softmax(x):
     x_exp = np.exp(x - np.max(x))
-
     return x_exp / x_exp.sum()
 
 

@@ -27,21 +27,22 @@ ENV_INFO = {
 }
 
 
-def train_loop(policy, env, config, verbose=True, n_jobs=1):
-    es = OpenAiES(policy, config["learning_rate"], config["noise_std"])
-
+def train_loop(policy, env, config, n_jobs=1, verbose=True):
+    es = OpenAiES(
+        model=policy, 
+        learning_rate=config["learning_rate"], 
+        noise_std=config["noise_std"],
+        noise_decay=config.get("noise_decay", 1.0),
+        lr_decay=config.get("lr_decay", 1.0),
+        decay_step=config.get("decay_step", 50)
+    )
+    
     log = defaultdict(list)
     for session in tqdm(range(config["n_sessions"])):
         population = es.generate_population(config["population_size"])
 
-        # Parallel(n_jobs=1) slower than numpy, but for n_jobs > 1 thats not true
-        if n_jobs > 1:
-            rewards_jobs = (eval_policy_delayed(new_policy, env, config["env_steps"]) for new_policy in population)
-            rewards = np.array(Parallel(n_jobs=n_jobs)(rewards_jobs))
-        else:
-            rewards = np.zeros_like(population)
-            for i, new_policy in enumerate(population):
-                rewards[i] = eval_policy(new_policy, env, config["env_steps"])
+        rewards_jobs = (eval_policy_delayed(new_policy, env, config["env_steps"]) for new_policy in population)
+        rewards = np.array(Parallel(n_jobs=n_jobs)(rewards_jobs))
         
         es.update_population(rewards)
         
@@ -64,7 +65,7 @@ def train_loop(policy, env, config, verbose=True, n_jobs=1):
     return log
 
 
-def run_experiment(config, verbose=True, n_jobs=4):
+def run_experiment(config, n_jobs=4, verbose=True):
     env = gym.make(config["env"])
     env._env_name = env.spec._env_name
 
@@ -75,7 +76,7 @@ def run_experiment(config, verbose=True, n_jobs=4):
         out_features=n_actions, 
         hidden_sizes=config["hidden_sizes"]
     )
-    log = train_loop(policy, env, config, verbose, n_jobs)
+    log = train_loop(policy, env, config, n_jobs, verbose)
 
     plot_rewards(log["best_mean_rewards"], log["best_std_rewards"], config)
 
