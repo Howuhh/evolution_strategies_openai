@@ -47,7 +47,7 @@ def train_loop(policy, env, config, n_jobs=1, verbose=True):
         es.update_population(rewards)
         
         # best policy stats
-        if session % config.get("eval_steps", 2) == 0:
+        if session % config.get("eval_step", 2) == 0:
             best_policy = es.get_model()
 
             best_rewards = np.zeros(10)
@@ -74,8 +74,8 @@ def run_experiment(config, n_jobs=4, verbose=True):
     if config.get("init_model", None):
         policy = ThreeLayerNetwork.from_model(config["init_model"])
         
-        assert policy.n_states == n_states, "not correct policy input dims"
-        assert policy.n_actions == n_actions, "not correct policy output dims"
+        assert policy.in_features == n_states, "not correct policy input dims"
+        assert policy.out_features == n_actions, "not correct policy output dims"
     else:
         policy = ThreeLayerNetwork(
             in_features=n_states, 
@@ -84,18 +84,26 @@ def run_experiment(config, n_jobs=4, verbose=True):
         )
     log = train_loop(policy, env, config, n_jobs, verbose)
 
+    if config.get("log_path", None):
+        with open(f"{config['log_path']}{config['experiment_name']}", "wb") as file:
+            pickle.dump(log, file)
+
+    if config.get("model_path", None):
+        with open(f"{config['model_path']}{config['experiment_name']}.pkl", "wb") as file:
+            pickle.dump(policy, file)
+
     plot_rewards(log["best_mean_rewards"], log["best_std_rewards"], config)
 
     return policy
 
 
-def render_policy(model_path, env_name):
+def render_policy(model_path, env_name, n_videos=1):
     with open(model_path, "rb") as file:
         policy = pickle.load(file)
 
     model_name = model_path.split("/")[-1].split(".")[0]
     
-    for i in range(1):
+    for i in range(n_videos):
         env = gym.make(env_name)
         env = wrappers.Monitor(env, f'videos/{model_name}/' + str(uuid.uuid4()), force=True)
 
@@ -104,22 +112,5 @@ def render_policy(model_path, env_name):
 
 
 if __name__ == "__main__":
-    pass
-    # render_policy("models/test_CartPole_v1.pkl", "CartPole-v0")
-    # render_policy("models/test_LunarLander_v3.pkl", "LunarLander-v2")
-    # render_policy("models/test_LunarLanderCont_v1.pkl", "LunarLanderContinuous-v2")
-    render_policy("models/test_BipedalWalker_v4.pkl", "BipedalWalker-v3")
-    
-    # test_config = {
-    #     "experiment_name": "test_test",
-    #     "plot_path": "plots/",
-    #     "model_path": "models/",
-    #     "env": "CartPole-v0",
-    #     "n_sessions": 128,
-    #     "env_steps": 200, 
-    #     "population_size": 256,
-    #     "learning_rate": 0.01,
-    #     "noise_std": 0.075,
-    #     "hidden_sizes": (64, 64)
-    # }
+    render_policy("models/test_BipedalWalker_v5.0.pkl", "BipedalWalker-v3")
 

@@ -41,6 +41,8 @@ class ThreeLayerNetwork:
         with open(path, "rb") as file:
             model = pickle.load(file)
 
+        assert isinstance(model, ThreeLayerNetwork), "init model is not instance of ThreeLayerNetwork class"
+
         return model
 
     def forward(self, X):
