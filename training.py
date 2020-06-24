@@ -13,7 +13,7 @@ from gym import wrappers
 from linear import ThreeLayerNetwork
 from es import OpenAiES
 from plot import plot_rewards
-from evaluation import eval_policy, eval_policy_delayed
+from evaluation import eval_policy_delayed, eval_policy
 
 # env: (n_states, n_actions)
 ENV_INFO = {
@@ -45,6 +45,10 @@ def train_loop(policy, env, config, n_jobs=1, verbose=True):
         rewards = np.array(Parallel(n_jobs=n_jobs)(rewards_jobs))
         
         es.update_population(rewards)
+
+        # populations stats
+        log["pop_mean_rewards"].append(np.mean(rewards))
+        log["pop_std_rewards"].append(np.std(rewards))
         
         # best policy stats
         if session % config.get("eval_step", 2) == 0:
@@ -82,10 +86,11 @@ def run_experiment(config, n_jobs=4, verbose=True):
             out_features=n_actions, 
             hidden_sizes=config["hidden_sizes"]
         )
+    # TODO: save model on KeyboardInterrupt exception
     log = train_loop(policy, env, config, n_jobs, verbose)
 
     if config.get("log_path", None):
-        with open(f"{config['log_path']}{config['experiment_name']}", "wb") as file:
+        with open(f"{config['log_path']}{config['experiment_name']}.pkl", "wb") as file:
             pickle.dump(log, file)
 
     if config.get("model_path", None):
@@ -112,5 +117,5 @@ def render_policy(model_path, env_name, n_videos=1):
 
 
 if __name__ == "__main__":
-    render_policy("models/test_BipedalWalker_v5.0.pkl", "BipedalWalker-v3")
+    render_policy("models/test_BipedalWalker_v5.3.pkl", "BipedalWalker-v3")
 

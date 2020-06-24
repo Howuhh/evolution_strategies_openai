@@ -62,10 +62,10 @@ from training import run_experiment
 
 example_config = {
     "experiment_name": "test_BipedalWalker_v0",
-    "plot_path": "../plots/",
-    "model_path": "../models/", # optional
-    "log_path": "../logs/" # optional
-    "init_model": "../models/test_BipedalWalker_v5.0.pkl",  # optional
+    "plot_path": "plots/",
+    "model_path": "models/", # optional
+    "log_path": "logs/", # optional
+    "init_model": "models/test_BipedalWalker_v5.0.pkl",  # optional
     "env": "BipedalWalker-v3",
     "n_sessions": 128,
     "env_steps": 1600, 
@@ -120,6 +120,11 @@ noise/lr annealing - https://cs231n.github.io/neural-networks-3/#anneal,  https:
 
 <!-- Наблюдения: легко решает среды, в которых легко исследовать/пробовать разное, т.к тогда точнее получается градиент и больше данных по реварду. Среды в которых ревард очень редкий решаются очень плохо т.к. до того, как случайно случится событие с ревардом может пройти очень много времени, т.к. поиск до этого случайны и обучения нет. Taxi-v3: плохо работает и генетический и метод кросс энтропии -->
 
+<!--         # if env.spec._env_name == 'MountainCarContinuous':
+        #     reward = reward + 10 * abs(new_obs[1])
+            # TODO: add novelity search reward (https://lilianweng.github.io/lil-log/2019/09/05/evolution-strategies.html)
+            # метод потенциалов https://habr.com/ru/company/hsespb/blog/444428/
+            # reward = reward + 300 * (0.99 * abs(new_obs[1]) - abs(obs[1])) -->
 ## References
 
 [Evolution Strategies as a Scalable Alternative to Reinforcement Learning](https://arxiv.org/abs/1703.03864) (Tim Salimans, Jonathan Ho, Xi Chen, Ilya Sutskever)
