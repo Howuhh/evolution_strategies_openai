@@ -105,8 +105,8 @@ policy = run_experiment(example_config, n_jobs=4, verbose=True)
 - [x] CartPole   
 - [x] LunarLander   
 - [x] LunarLanderContinuous
+- [ ] BipedalWalker-v3
 - [ ] MountainCarContinuous
-- [ ] BipedalWalker-v2
 - [ ] CarRacing
 
 <!-- ## Ideas

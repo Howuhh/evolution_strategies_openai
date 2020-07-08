@@ -59,7 +59,8 @@ def train_loop(policy, env, config, n_jobs=1, verbose=True):
                 best_rewards[i] = eval_policy(best_policy, env, config["env_steps"])
 
             if verbose:
-                print(f"Session: {session}") 
+                # TODO: add timestamp
+                print(f"Session: {session}")   
                 print(f"Mean reward: {round(np.mean(rewards), 4)}", f"std: {round(np.std(rewards), 3)}")
                 print(f"lr: {round(es.lr, 5)}, noise_std: {round(es.noise_std, 5)}")
 
@@ -112,10 +113,11 @@ def render_policy(model_path, env_name, n_videos=1):
         env = gym.make(env_name)
         env = wrappers.Monitor(env, f'videos/{model_name}/' + str(uuid.uuid4()), force=True)
 
-        eval_policy(policy, env, n_steps=1000)
+        print(eval_policy(policy, env, n_steps=1600))
         env.close()
 
 
 if __name__ == "__main__":
-    render_policy("models/test_BipedalWalker_v5.3.pkl", "BipedalWalker-v3")
+    # TODO: analyse population stat from logs
+    render_policy("models/test_BipedalWalker_v6.1.pkl", "BipedalWalker-v3")
 
