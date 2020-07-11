@@ -2,6 +2,47 @@
 
 Implementation is strictly for educational purposes and not distributed (as in paper), but it works.
 
+## Example
+
+```python
+from training import run_experiment, render_policy
+
+example_config = {
+    "experiment_name": "test_BipedalWalker_v0",
+    "plot_path": "plots/",
+    "model_path": "models/", # optional
+    "log_path": "logs/", # optional
+    "init_model": "models/test_BipedalWalker_v5.0.pkl",  # optional
+    "env": "BipedalWalker-v3",
+    "n_sessions": 128,
+    "env_steps": 1600, 
+    "population_size": 256,
+    "learning_rate": 0.06,
+    "noise_std": 0.1,
+    "noise_decay": 0.99, # optional
+    "lr_decay": 1.0, # optional
+    "decay_step": 20, # optional
+    "eval_step": 10, 
+    "hidden_sizes": (40, 40)
+  }
+
+policy = run_experiment(example_config, n_jobs=4, verbose=True)
+
+# to render policy perfomance
+render_policy(model_path, env_name, n_videos=10)
+```
+
+## Implemented
+
+- [x] OpenAI ES algorithm [Algorithm 1].
+- [x] Z-normalization fitness shaping (not rank-based).
+- [x] Parallelization with joblib.
+- [x] Training for 6 OpenAI gym envs (3 solved).
+- [x] Simple three layer net as policy example.
+- [x] [Learning rate & noise std decay.](https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1) 
+
+![Algorithm_1](plots/algo_code.png)
+
 ## Experiments
 
 ### CartPole
@@ -55,43 +96,6 @@ Not solved yet. More iterations is needed.
   <img src="plots/gifs/best_bipedal_walker.gif" width="360" /> 
 </p>
 
-## Example
-
-```python
-from training import run_experiment
-
-example_config = {
-    "experiment_name": "test_BipedalWalker_v0",
-    "plot_path": "plots/",
-    "model_path": "models/", # optional
-    "log_path": "logs/", # optional
-    "init_model": "models/test_BipedalWalker_v5.0.pkl",  # optional
-    "env": "BipedalWalker-v3",
-    "n_sessions": 128,
-    "env_steps": 1600, 
-    "population_size": 256,
-    "learning_rate": 0.06,
-    "noise_std": 0.1,
-    "noise_decay": 0.99, # optional
-    "lr_decay": 1.0, # optional
-    "decay_step": 20, # optional
-    "eval_step": 10, 
-    "hidden_sizes": (40, 40)
-  }
-
-policy = run_experiment(example_config, n_jobs=4, verbose=True)
-```
-
-## Implemented
-
-- [x] OpenAI ES algorithm [Algorithm 1].
-- [x] Z-normalization fitness shaping (not rank-based).
-- [x] Parallelization with joblib.
-- [x] Training for 6 OpenAI gym envs (3 solved).
-- [x] Simple three layer net as policy example.
-- [x] [Learning rate & noise std decay.](https://towardsdatascience.com/learning-rate-schedules-and-adaptive-learning-rate-methods-for-deep-learning-2c8f433990d1) 
-
-![Algorithm_1](plots/algo_code.png)
 
 ## TODO
 

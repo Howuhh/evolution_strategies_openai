@@ -14,7 +14,7 @@ def test():
         "log_path": "../logs/",
         "init_model": "../models/test_BipedalWalker_v6.1.pkl",
         "env": "BipedalWalker-v3",
-        "n_sessions": 130,
+        "n_sessions": 250,
         "env_steps": 1300, 
         "population_size": 128,
         "learning_rate": 0.065,
