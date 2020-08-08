@@ -102,7 +102,6 @@ Not solved yet. More iterations is needed.
 - [ ] [Novelity search.](https://lilianweng.github.io/lil-log/2019/09/05/evolution-strategies.html) 
 - [ ] Mirrored sampling.
 - [ ] Better gradient steps: Adam.
-- [ ] Wrap CarRacing env, add images preprocessing (frame skip, grayscale, downgrade)
 
 ## TODO ENVS
 
@@ -111,7 +110,6 @@ Not solved yet. More iterations is needed.
 - [x] LunarLanderContinuous
 - [ ] BipedalWalker-v3
 - [ ] MountainCarContinuous
-- [ ] CarRacing
 
 <!-- ## Ideas
 
