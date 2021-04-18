@@ -96,21 +96,6 @@ Not solved yet. More iterations is needed.
   <img src="plots/gifs/best_bipedal_walker.gif" width="360" /> 
 </p>
 
-
-## TODO
-
-- [ ] [Novelity search.](https://lilianweng.github.io/lil-log/2019/09/05/evolution-strategies.html) 
-- [ ] Mirrored sampling.
-- [ ] Better gradient steps: Adam.
-
-## TODO ENVS
-
-- [x] CartPole   
-- [x] LunarLander   
-- [x] LunarLanderContinuous
-- [ ] BipedalWalker-v3
-- [ ] MountainCarContinuous
-
 <!-- ## Ideas
 
 skip frames - https://notanymike.github.io/Solving-CarRacing/, https://danieltakeshi.github.io/2016/11/25/frame-skipping-and-preprocessing-for-deep-q-networks-on-atari-2600-games/, https://github.com/openai/baselines/blob/master/baselines/common/atari_wrappers.py (NB!, class MaxAndSkipEnv(gym.Wrapper) and class WarpFrame(gym.ObservationWrapper)), https://alexandervandekleut.github.io/gym-wrappers/
